@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+<TextView
+android:text="@string/lbl_from_date"
+android:layout_width="wrap_content"
+android:textColor="@color/colorPrimary"
+android:layout_height="wrap_content"
+android:layout_margin="10dp"
+android:id="@+id/tvLblDate" />
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:ems="10"
+android:id="@+id/etDate" />
+
+<TextView
+android:text="@string/lbl_to_date"
+android:layout_width="wrap_content"
+android:textColor="@color/colorPrimary"
+android:layout_height="wrap_content"
+android:layout_margin="10dp"
+android:id="@+id/tvLblToDate" />
+
+<TextView
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:ems="10"
+android:id="@+id/etToDate" />
+
+<TextView
+android:text="@string/lbl_sort_order"
+android:textColor="@color/colorPrimary"
+android:layout_margin="10dp"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:id="@+id/tvLblSortOrder" />
+
+<Spinner
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:id="@+id/sort_spinner" />
+
+<Button
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:id="@+id/btnSave"
+android:text="@string/btn_save"
+android:onClick="onSaveClick"
+android:background="@color/colorPrimary"
+    />
+</LinearLayout>
