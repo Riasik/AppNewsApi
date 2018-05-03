@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_first);
+        setContentView(R.layout.activity_main);
         rvly_list_sources = (RecyclerView) findViewById(R.id.rvly_list_sources);
         listSourcesAdapter = new ListSourcesAdapter(this, listSources);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);

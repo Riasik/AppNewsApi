@@ -11,8 +11,11 @@ public interface ApiInterface {
 
     @GET("everything")
     Call<articlesResponse> getItems(@Query("sources") String source,
-                                    @Query("page") int pageNumber,
-                                    @Query("apiKey") String apiKey);
+                                     @Query("from") String fromDate,
+                                     @Query("to") String toDate,
+                                     @Query("sortBy") String sortOrder,
+                                     @Query("page") int pageNumber,
+                                     @Query("apiKey") String apiKey);
     @GET("sources")
     Call<Source> getListSource(@Query("language") String languange,
                                @Query("apiKey") String apiKey);

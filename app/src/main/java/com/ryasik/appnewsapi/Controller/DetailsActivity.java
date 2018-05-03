@@ -1,36 +1,40 @@
 package com.ryasik.appnewsapi.Controller;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+
 import com.ryasik.appnewsapi.R;
-import com.squareup.picasso.Picasso;
 
 public class DetailsActivity extends AppCompatActivity {
-
-    private TextView articleTitleTV, articleDescriptionTV, articleAuthorTV;
-    private ImageView articlePictureIV;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
+        setContentView(R.layout.activity_article_details);
 
-        Intent intent = getIntent();
-        String articleTitle = intent.getStringExtra("article_name");
-        String articleDescription = intent.getStringExtra("article_details");
-        String articlePictureURL = intent.getStringExtra("article_picture");
-        String articleAuthor = intent.getStringExtra("article_author");
+        try {
+            final String url = getIntent().getStringExtra("url");
 
-        articleTitleTV = findViewById(R.id.title_tv_tag);
-        articleDescriptionTV = findViewById(R.id.article_details_tv);
-        articlePictureIV = findViewById(R.id.article_image);
-        Picasso.with(this)
-                .load(articlePictureURL)
-                .into(articlePictureIV);
-        articleTitleTV.setText(articleTitle);
-        articleDescriptionTV.setText(articleDescription);
+            WebView webView = (WebView) findViewById(R.id.wvArticle);
+
+            webView.setWebViewClient(new WebViewClient(){
+                @Override
+                public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                    try {
+                        view.loadUrl(url);
+                    }catch (Exception ex){
+                        ex.printStackTrace();
+                    }
+                    return true;
+                }
+            });
+
+            webView.loadUrl(url);
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+
     }
 }

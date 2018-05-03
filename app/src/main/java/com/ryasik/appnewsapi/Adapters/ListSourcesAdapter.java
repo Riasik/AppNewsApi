@@ -15,7 +15,8 @@ import com.ryasik.appnewsapi.R;
 
 import java.util.List;
 
-public class ListSourcesAdapter extends RecyclerView.Adapter<ListSourcesAdapter.ViewHolder>{
+public class ListSourcesAdapter extends RecyclerView.Adapter<ListSourcesAdapter.ViewHolder>
+{
 
     private Context context;
     private List<Source.ListSource> listSources;
@@ -75,4 +76,5 @@ public class ListSourcesAdapter extends RecyclerView.Adapter<ListSourcesAdapter.
         this.listSources = listSources;
         notifyDataSetChanged();
     }
+
 }

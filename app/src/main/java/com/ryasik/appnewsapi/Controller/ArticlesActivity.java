@@ -18,6 +18,7 @@ import com.ryasik.appnewsapi.API.ApiClient;
 import com.ryasik.appnewsapi.API.ApiInterface;
 import com.ryasik.appnewsapi.Adapters.PaginationAdapter;
 import com.ryasik.appnewsapi.Adapters.PaginationScrollListener;
+import com.ryasik.appnewsapi.Filters.ArticleFilter;
 import com.ryasik.appnewsapi.Fragments.SettingsFragment;
 import com.ryasik.appnewsapi.Model.Item;
 import com.ryasik.appnewsapi.Model.articlesResponse;
@@ -29,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ArticlesActivity extends AppCompatActivity {
+public class ArticlesActivity extends AppCompatActivity implements SettingsFragment.SettingsFragmentCallBack{
     public static String API_KEY = MainActivity.API_KEY;
     private static final String TAG = ArticlesActivity.class.getSimpleName();
 
@@ -50,7 +51,7 @@ public class ArticlesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_articles);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
@@ -94,6 +95,7 @@ public class ArticlesActivity extends AppCompatActivity {
                 results = fetchResults(response);
                 progressBar.setVisibility(View.GONE);
                 Log.i("api response","results body contains "+ results);
+                Log.d("response.body()", String.valueOf(results));
                 adapter.addAll(results);
 
                 if (adapter.getItemCount() < 1000)
@@ -138,14 +140,18 @@ public class ArticlesActivity extends AppCompatActivity {
     }
 
     private Call<articlesResponse> callNewsApi(int currentPage) {
-        return apiService.getItems(source,currentPage,API_KEY);
+
+        return apiService.getItems(source,
+                ArticleFilter.getArticleFilterInstance().getFromDate(),
+                ArticleFilter.getArticleFilterInstance().getToDate(),
+                ArticleFilter.getArticleFilterInstance().getSortOrder(),
+                currentPage,API_KEY);
     }
 
     private List<Item> fetchResults(Response<articlesResponse> response) {
         articlesResponse articlesResponse = response.body();
 
         if (articlesResponse != null) {
-
             return articlesResponse.getArticles();
         }
         return results;
@@ -172,4 +178,17 @@ public class ArticlesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void event() {
+        getApplicationContext().startActivity(new Intent(getApplicationContext(), ArticlesActivity.class)
+                .putExtra("source", source));
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        ArticleFilter.getArticleFilterInstance().setFromDate(null);
+        ArticleFilter.getArticleFilterInstance().setToDate(null);
+        ArticleFilter.getArticleFilterInstance().setSortOrder(null);
+    }
 }

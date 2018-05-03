@@ -1,5 +1,6 @@
 package com.ryasik.appnewsapi.Fragments;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -27,6 +29,7 @@ public class SettingsFragment extends DialogFragment{
     TextView etToDateText;
     Spinner sprSortOrder;
     Button btnSave;
+    ImageView btnFromDate, btnToDate;
     ArrayAdapter<CharSequence> spinnerAdapter;
 
     public void onCreate(Bundle savedInstanceState){
@@ -40,6 +43,8 @@ public class SettingsFragment extends DialogFragment{
         etFromDateText = (TextView) view.findViewById(R.id.etDate);
         etToDateText = (TextView) view.findViewById(R.id.etToDate);
         btnSave = (Button)view.findViewById(R.id.btnSave);
+        btnFromDate = (ImageView) view.findViewById(R.id.btn_from_date);
+        btnToDate = (ImageView) view.findViewById(R.id.btn_to_date);
         loadSortOrder(view);
         return view;
     }
@@ -80,13 +85,13 @@ public class SettingsFragment extends DialogFragment{
     }
 
     private void setListeners(){
-        etFromDateText.setOnClickListener(new View.OnClickListener() {
+        btnFromDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker(v.getId());
             }
         });
-        etToDateText.setOnClickListener(new View.OnClickListener() {
+        btnToDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker(v.getId());
@@ -105,6 +110,7 @@ public class SettingsFragment extends DialogFragment{
         ArticleFilter.getArticleFilterInstance().setToDate((String.valueOf(etToDateText.getText())));
         ArticleFilter.getArticleFilterInstance().setSortOrder(String.valueOf(sprSortOrder.getSelectedItem()));
         dismiss();
+        callBack.event();
     }
 
     private void showDatePicker(final int idDate){
@@ -120,7 +126,7 @@ public class SettingsFragment extends DialogFragment{
 
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
-                if (idDate == R.id.etDate) {
+                if (idDate == R.id.btn_from_date) {
                     etFromDateText.setText(String.valueOf(monthOfYear + 1) + "/" + String.valueOf(dayOfMonth)
                             + "/" + String.valueOf(year));
                 }else {
@@ -134,4 +140,19 @@ public class SettingsFragment extends DialogFragment{
         datePickerFragment.show(getFragmentManager(),"Date Picker");
     }
 
+    public interface SettingsFragmentCallBack {
+        public void event();
+    }
+
+    SettingsFragmentCallBack callBack;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            callBack = (SettingsFragmentCallBack) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString() + " must implement onSomeEventListener");
+        }
+    }
 }

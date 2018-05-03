@@ -183,10 +183,7 @@ public class PaginationAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private void startDetailsActivtiy(Item item) {
         Intent myIntent = new Intent(context, DetailsActivity.class);
-        myIntent.putExtra("article_name", item.getTitle());
-        myIntent.putExtra("article_author", item.getAuthor());
-        myIntent.putExtra("article_details", item.getDescription());
-        myIntent.putExtra("article_picture", item.getUrlToImage());
+        myIntent.putExtra("url", item.getUrl());
         context.startActivity(myIntent);
     }
 
