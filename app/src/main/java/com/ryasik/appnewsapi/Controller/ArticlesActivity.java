@@ -171,8 +171,8 @@ public class ArticlesActivity extends AppCompatActivity implements SettingsFragm
             fragment.show(fragMan, "fragment_settings");
             return true;
         }if (item.getItemId() == R.id.action_favorites){
-            Intent intent = new Intent(getApplicationContext(), FavoritesActivity.class);
-            getApplicationContext().startActivity(intent);
+            Intent intent = new Intent(this, FavoritesActivity.class);
+            this.startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -180,7 +180,7 @@ public class ArticlesActivity extends AppCompatActivity implements SettingsFragm
 
     @Override
     public void event() {
-        getApplicationContext().startActivity(new Intent(getApplicationContext(), ArticlesActivity.class)
+        this.startActivity(new Intent(this, ArticlesActivity.class)
                 .putExtra("source", source));
     }
 

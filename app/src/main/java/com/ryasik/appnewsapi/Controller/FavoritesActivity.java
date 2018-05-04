@@ -35,7 +35,7 @@ public class FavoritesActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
     }
     private void onLoadList(){
-        BaseHelper baseHelper = new BaseHelper(getApplicationContext());
+        BaseHelper baseHelper = new BaseHelper(this);
         list =  baseHelper.getFavoritesArticles();
     }
 }
